@@ -258,21 +258,21 @@ const RegistrationView: React.FC<{
 
       <Modal isOpen={isAddStudentOpen} onClose={() => setIsAddStudentOpen(false)} title="Profil Atlet Baharu">
         <div className="space-y-5">
-          <input type="text" placeholder="NO BADAN (E.G., B101)" className="w-full p-5 border-2 rounded-2xl font-black uppercase outline-none" onChange={e => setNewStudent({...newStudent, no_badan: e.target.value.toUpperCase()})} />
+          <input type="text" placeholder="NO BADAN (E.G., B101)" className="w-full p-5 border-2 rounded-2xl font-black uppercase text-sm outline-none" onChange={e => setNewStudent({...newStudent, no_badan: e.target.value.toUpperCase()})} />
           <div className="relative">
-                <input list="student-names" placeholder="NAMA PENUH" className="w-full p-5 pl-14 border-2 rounded-2xl font-black uppercase outline-none" onChange={e => setNewStudent({...newStudent, nama: e.target.value.toUpperCase()})} />
+                <input list="student-names" placeholder="NAMA PENUH" className="w-full p-5 pl-14 border-2 rounded-2xl font-black uppercase text-sm outline-none" onChange={e => setNewStudent({...newStudent, nama: e.target.value.toUpperCase()})} />
                 <Search className="absolute left-5 top-5 text-slate-300" size={20} />
                 <datalist id="student-names">{MASTER_STUDENT_NAMES.map(n => <option key={n} value={n} />)}</datalist>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <select className="p-5 border-2 rounded-2xl font-black outline-none" onChange={e => setNewStudent({...newStudent, jenis_kelamin: e.target.value as any})}>
+            <select className="p-5 border-2 rounded-2xl font-black text-sm outline-none" onChange={e => setNewStudent({...newStudent, jenis_kelamin: e.target.value as any})}>
                 <option value="Lelaki">Lelaki</option><option value="Perempuan">Perempuan</option>
             </select>
-            <select className="p-5 border-2 rounded-2xl font-black outline-none" onChange={e => setNewStudent({...newStudent, tingkatan: e.target.value})}>
+            <select className="p-5 border-2 rounded-2xl font-black text-sm outline-none" onChange={e => setNewStudent({...newStudent, tingkatan: e.target.value})}>
                 {MASTER_CLASSES.map(c => <option key={c} value={c}>{c}</option>)}
             </select>
           </div>
-          <select className="w-full p-5 border-2 rounded-2xl font-black outline-none" onChange={e => setNewStudent({...newStudent, rumah: e.target.value as any})}>
+          <select className="w-full p-5 border-2 rounded-2xl font-black text-sm outline-none" onChange={e => setNewStudent({...newStudent, rumah: e.target.value as any})}>
                 {Object.values(House).map(h => <option key={h} value={h}>{h}</option>)}
           </select>
           <button onClick={handleAddStudent} className="w-full bg-blue-600 text-white p-6 rounded-2xl font-black shadow-2xl hover:bg-blue-700">SIMPAN PROFIL</button>
@@ -281,15 +281,15 @@ const RegistrationView: React.FC<{
 
       <Modal isOpen={isEnrollOpen} onClose={() => setIsEnrollOpen(false)} title="Daftar Acara">
         <div className="space-y-5">
-          <select className="w-full p-5 border-2 rounded-2xl font-black outline-none" onChange={e => setEnrollment({...enrollment, studentId: e.target.value})}>
+          <select className="w-full p-5 border-2 rounded-2xl font-black text-sm outline-none" onChange={e => setEnrollment({...enrollment, studentId: e.target.value})}>
                 <option value="">-- PILIH ATLET --</option>
                 {students.sort((a,b) => a.nama.localeCompare(b.nama)).map(s => <option key={s.id} value={s.id}>{s.no_badan} - {s.nama} ({s.kategori})</option>)}
           </select>
-          <select className="w-full p-5 border-2 rounded-2xl font-black outline-none" onChange={e => setEnrollment({...enrollment, eventId: e.target.value})}>
+          <select className="w-full p-5 border-2 rounded-2xl font-black text-sm outline-none" onChange={e => setEnrollment({...enrollment, eventId: e.target.value})}>
                 <option value="">-- PILIH ACARA --</option>
                 {events.map(e => <option key={e.id} value={e.id}>{e.nama_acara} ({e.kategori})</option>)}
           </select>
-          <select className="w-full p-5 border-2 rounded-2xl font-black outline-none" onChange={e => setEnrollment({...enrollment, role: e.target.value as any})}>
+          <select className="w-full p-5 border-2 rounded-2xl font-black text-sm outline-none" onChange={e => setEnrollment({...enrollment, role: e.target.value as any})}>
                 <option value={ParticipationRole.Main}>PESERTA UTAMA</option>
                 <option value={ParticipationRole.Reserve}>PESERTA SIMPANAN</option>
           </select>
@@ -427,6 +427,8 @@ const JudgeFormView: React.FC<{
     const formRef = useRef<HTMLDivElement>(null);
 
     const event = useMemo(() => events.find(e => e.id === selectedEventId), [selectedEventId, events]);
+    const isFieldEvent = event?.jenis_acara === EventType.Field;
+
     const eventParticipants = useMemo(() => {
         if (!selectedEventId) return [];
         return participations
@@ -478,34 +480,64 @@ const JudgeFormView: React.FC<{
                             <span className="bg-slate-100 px-4 py-1 rounded-full text-[10px] font-black uppercase">Acara: {event.nama_acara}</span>
                             <span className="bg-slate-100 px-4 py-1 rounded-full text-[10px] font-black uppercase">Kategori: {event.kategori}</span>
                         </div>
+                        {isFieldEvent && (
+                           <p className="mt-2 text-[10px] font-black uppercase text-blue-600">Acara Padang: 3 Kali Percubaan Diberikan</p>
+                        )}
                     </div>
 
                     <table className="w-full border-collapse border-2 border-slate-900">
                         <thead>
                             <tr className="bg-slate-100">
-                                <th className="p-3 border-2 border-slate-900 text-center text-[10px] uppercase font-black w-12">Bil</th>
-                                <th className="p-3 border-2 border-slate-900 text-left text-[10px] uppercase font-black w-24">No Badan</th>
+                                <th className="p-3 border-2 border-slate-900 text-center text-[10px] uppercase font-black w-10">Bil</th>
+                                <th className="p-3 border-2 border-slate-900 text-left text-[10px] uppercase font-black w-20">No Badan</th>
                                 <th className="p-3 border-2 border-slate-900 text-left text-[10px] uppercase font-black">Nama Atlet</th>
-                                <th className="p-3 border-2 border-slate-900 text-center text-[10px] uppercase font-black w-32">Keputusan (Masa/Jarak)</th>
-                                <th className="p-3 border-2 border-slate-900 text-center text-[10px] uppercase font-black w-24">Kedudukan</th>
+                                {isFieldEvent ? (
+                                   <>
+                                      <th className="p-3 border-2 border-slate-900 text-center text-[10px] uppercase font-black w-12">P1</th>
+                                      <th className="p-3 border-2 border-slate-900 text-center text-[10px] uppercase font-black w-12">P2</th>
+                                      <th className="p-3 border-2 border-slate-900 text-center text-[10px] uppercase font-black w-12">P3</th>
+                                      <th className="p-3 border-2 border-slate-900 text-center text-[10px] uppercase font-black w-16">Terbaik</th>
+                                   </>
+                                ) : (
+                                   <th className="p-3 border-2 border-slate-900 text-center text-[10px] uppercase font-black w-32">Keputusan (Masa)</th>
+                                )}
+                                <th className="p-3 border-2 border-slate-900 text-center text-[10px] uppercase font-black w-16">No.</th>
                             </tr>
                         </thead>
                         <tbody>
                             {eventParticipants.map((p, idx) => (
-                                <tr key={p.student?.id} className="h-16">
+                                <tr key={p.student?.id} className="h-14">
                                     <td className="p-3 border-2 border-slate-900 text-center font-black">{idx + 1}</td>
                                     <td className="p-3 border-2 border-slate-900 font-mono font-bold text-xs uppercase">{p.student?.no_badan}</td>
-                                    <td className="p-3 border-2 border-slate-900 font-black uppercase text-[11px] leading-tight">{p.student?.nama}</td>
-                                    <td className="p-3 border-2 border-slate-900"></td>
+                                    <td className="p-3 border-2 border-slate-900 font-black uppercase text-[10px] leading-tight">{p.student?.nama}</td>
+                                    {isFieldEvent ? (
+                                       <>
+                                          <td className="border-2 border-slate-900"></td>
+                                          <td className="border-2 border-slate-900"></td>
+                                          <td className="border-2 border-slate-900"></td>
+                                          <td className="border-2 border-slate-900 bg-slate-50"></td>
+                                       </>
+                                    ) : (
+                                       <td className="border-2 border-slate-900"></td>
+                                    )}
                                     <td className="p-3 border-2 border-slate-900"></td>
                                 </tr>
                             ))}
-                            {[...Array(Math.max(0, 8 - eventParticipants.length))].map((_, i) => (
-                                <tr key={`empty-${i}`} className="h-16">
+                            {[...Array(Math.max(0, 10 - eventParticipants.length))].map((_, i) => (
+                                <tr key={`empty-${i}`} className="h-14">
                                     <td className="p-3 border-2 border-slate-900 text-center font-black">{eventParticipants.length + i + 1}</td>
                                     <td className="p-3 border-2 border-slate-900"></td>
                                     <td className="p-3 border-2 border-slate-900"></td>
-                                    <td className="p-3 border-2 border-slate-900"></td>
+                                    {isFieldEvent ? (
+                                       <>
+                                          <td className="border-2 border-slate-900"></td>
+                                          <td className="border-2 border-slate-900"></td>
+                                          <td className="border-2 border-slate-900"></td>
+                                          <td className="border-2 border-slate-900 bg-slate-50"></td>
+                                       </>
+                                    ) : (
+                                       <td className="border-2 border-slate-900"></td>
+                                    )}
                                     <td className="p-3 border-2 border-slate-900"></td>
                                 </tr>
                             ))}
@@ -593,7 +625,7 @@ const ResultsView: React.FC<{
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
           <div className="flex-1">
             <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest ml-1 mb-1 block">Pilih Acara</label>
-            <select className="w-full p-4 border-2 rounded-2xl font-black outline-none bg-slate-50" value={selectedEventId} onChange={e => setSelectedEventId(e.target.value)}>
+            <select className="w-full p-4 border-2 rounded-2xl font-black text-sm outline-none bg-slate-50" value={selectedEventId} onChange={e => setSelectedEventId(e.target.value)}>
               <option value="">-- PILIH ACARA --</option>
               {events.map(e => <option key={e.id} value={e.id}>{e.nama_acara} ({e.kategori})</option>)}
             </select>
@@ -606,22 +638,22 @@ const ResultsView: React.FC<{
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
               <div>
                 <label className="text-[9px] font-black text-slate-400 uppercase ml-1 mb-1 block">Tempat</label>
-                <select className="w-full p-4 border rounded-xl font-bold" value={newResult.tempat} onChange={e => setNewResult({...newResult, tempat: parseInt(e.target.value)})}>
+                <select className="w-full p-4 border rounded-xl font-bold text-sm" value={newResult.tempat} onChange={e => setNewResult({...newResult, tempat: parseInt(e.target.value)})}>
                   {[1, 2, 3, 4, 5].map(t => <option key={t} value={t}>Tempat Ke-{t}</option>)}
                 </select>
               </div>
               <div>
                 <label className="text-[9px] font-black text-slate-400 uppercase ml-1 mb-1 block">Atlet</label>
-                <select className="w-full p-4 border rounded-xl font-bold" value={newResult.studentId || ''} onChange={e => setNewResult({...newResult, studentId: e.target.value})}>
+                <select className="w-full p-4 border rounded-xl font-bold text-sm" value={newResult.studentId || ''} onChange={e => setNewResult({...newResult, studentId: e.target.value})}>
                   <option value="">-- PILIH ATLET --</option>
                   {eligibleStudents.map(s => <option key={s.id} value={s.id}>{s.no_badan} - {s.nama} ({s.rumah})</option>)}
                 </select>
               </div>
               <div>
                 <label className="text-[9px] font-black text-slate-400 uppercase ml-1 mb-1 block">Masa/Jarak/Tinggi</label>
-                <input type="text" placeholder="E.G., 12.5s / 5.2m" className="w-full p-4 border rounded-xl font-bold uppercase" value={newResult.hasil} onChange={e => setNewResult({...newResult, hasil: e.target.value.toUpperCase()})} />
+                <input type="text" placeholder="E.G., 12.5s / 5.2m" className="w-full p-4 border rounded-xl font-bold text-sm uppercase" value={newResult.hasil} onChange={e => setNewResult({...newResult, hasil: e.target.value.toUpperCase()})} />
               </div>
-              <button onClick={handleAddResult} className="bg-emerald-600 text-white p-4 rounded-xl font-black flex items-center justify-center gap-2 hover:bg-emerald-700 transition-all">
+              <button onClick={handleAddResult} className="bg-emerald-600 text-white p-4 rounded-xl font-black text-xs flex items-center justify-center gap-2 hover:bg-emerald-700 transition-all">
                 <Save size={18} /> SIMPAN KEPUTUSAN
               </button>
             </div>
@@ -656,10 +688,10 @@ const ResultsView: React.FC<{
                              <span className="text-2xl font-black">{r.tempat === 1 ? '🥇' : r.tempat === 2 ? '🥈' : r.tempat === 3 ? '🥉' : r.tempat}</span>
                           </td>
                           <td className="p-4">
-                             <div className="font-black text-slate-800 uppercase">{student?.nama}</div>
+                             <div className="font-black text-slate-800 uppercase text-xs">{student?.nama}</div>
                              <div className={`text-[10px] font-black uppercase ${HOUSE_CONFIG[student!.rumah].text}`}>{student?.rumah}</div>
                           </td>
-                          <td className="p-4 text-center font-mono font-bold text-blue-600">
+                          <td className="p-4 text-center font-mono font-bold text-blue-600 text-sm">
                              {r.hasil} {r.bonusRekod && <span className="ml-2 bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full text-[8px] font-black">REKOD</span>}
                           </td>
                           <td className="p-4 text-center">
@@ -762,7 +794,7 @@ const ReportsView: React.FC<{
                    {housePoints.map((hp, idx) => (
                       <tr key={hp.house}>
                          <td className="p-3 border text-center font-black">{idx + 1}</td>
-                         <td className="p-3 border font-black uppercase tracking-widest">{hp.house}</td>
+                         <td className="p-3 border font-black uppercase tracking-widest text-xs">{hp.house}</td>
                          <td className="p-3 border text-center font-black text-xl">{hp.totalPoints}</td>
                       </tr>
                    ))}
@@ -889,7 +921,7 @@ const App: React.FC = () => {
         </div>
       </nav>
 
-      <main className="container mx-auto px-6 py-12 max-w-7xl">
+      <main className="container mx-auto px-6 py-12 max-w-7xl text-slate-800">
         {activeTab === 'leaderboard' && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 animate-slide-in">
             {housePoints.map((hp, idx) => {
