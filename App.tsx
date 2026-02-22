@@ -1171,14 +1171,36 @@ const App: React.FC = () => {
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-slate-700">Nama Atlet</label>
                     <input 
-                      list="students-list"
+                      list="registered-students-list"
                       type="text"
                       placeholder="Cari atau taip nama atlet"
                       className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                       value={formData.athleteName}
-                      onChange={e => setFormData({...formData, athleteName: e.target.value})}
+                      onChange={e => {
+                        const name = e.target.value;
+                        setFormData({...formData, athleteName: name});
+                        // Auto-select house if student is found in registrations
+                        const reg = registrations.find(r => 
+                          r.athleteName === name && 
+                          r.eventName === formData.eventName && 
+                          r.category === formData.category
+                        );
+                        if (reg) {
+                          setFormData(prev => ({...prev, athleteName: name, house: reg.house}));
+                        }
+                      }}
                       required
                     />
+                    <datalist id="registered-students-list">
+                      {registrations
+                        .filter(r => r.eventName === formData.eventName && r.category === formData.category)
+                        .map(reg => (
+                          <option key={reg.id} value={reg.athleteName}>
+                            {reg.athleteName} ({reg.house})
+                          </option>
+                        ))
+                      }
+                    </datalist>
                   </div>
 
                   <button 
