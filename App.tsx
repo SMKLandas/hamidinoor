@@ -471,34 +471,34 @@ const App: React.FC = () => {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [registrations, setRegistrations] = useState<AthleteRegistration[]>([]);
   
-  const [selectedStartingEvent, setSelectedStartingEvent] = useState('100M');
-  const [selectedStartingCategory, setSelectedStartingCategory] = useState('L1');
+  const [selectedStartingEvent, setSelectedStartingEvent] = useState('');
+  const [selectedStartingCategory, setSelectedStartingCategory] = useState('');
 
-  const [selectedJudgesEvent, setSelectedJudgesEvent] = useState('100M');
-  const [selectedJudgesCategory, setSelectedJudgesCategory] = useState('L1');
+  const [selectedJudgesEvent, setSelectedJudgesEvent] = useState('');
+  const [selectedJudgesCategory, setSelectedJudgesCategory] = useState('');
 
   const [formData, setFormData] = useState({
-    eventName: '100M',
-    category: 'L1',
+    eventName: '',
+    category: '',
     house: HouseName.TEMENGGUNG,
-    position: 1 as 1 | 2 | 3 | 4,
+    position: 0 as any,
     athleteName: ''
   });
 
   const [regFormData, setRegFormData] = useState({
     athleteName: '',
     house: HouseName.TEMENGGUNG,
-    eventType: 'Balapan' as 'Balapan' | 'Padang' | 'Terbuka',
-    eventName: '100M',
-    category: 'L1',
-    kelas: '1 AL HAMBALI',
-    type: 'Utama' as 'Utama' | 'Simpanan'
+    eventType: '' as any,
+    eventName: '',
+    category: '',
+    kelas: '',
+    type: '' as any
   });
   const [eventFormData, setEventFormData] = useState({
-    title: '100M',
+    title: '',
     date: '',
     time: '',
-    location: 'PADANG SMK LANDAS'
+    location: ''
   });
   const [isExporting, setIsExporting] = useState(false);
   const dashboardRef = useRef<HTMLDivElement>(null);
@@ -567,7 +567,7 @@ const App: React.FC = () => {
 
   const handleAddResult = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.eventName || !formData.athleteName) {
+    if (!formData.eventName || !formData.athleteName || !formData.category || !formData.position) {
       alert('Sila lengkapkan semua maklumat!');
       return;
     }
@@ -583,7 +583,7 @@ const App: React.FC = () => {
     setFormData({
       ...formData,
       athleteName: '',
-      position: 1
+      position: 0 as any
     });
     alert('Keputusan berjaya ditambah!');
   };
@@ -596,7 +596,7 @@ const App: React.FC = () => {
 
   const handleAddEvent = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!eventFormData.title || !eventFormData.date) {
+    if (!eventFormData.title || !eventFormData.date || !eventFormData.location) {
       alert('Sila lengkapkan maklumat acara!');
       return;
     }
@@ -633,6 +633,11 @@ const App: React.FC = () => {
 
     if (!kelas) {
       alert('Sila pilih kelas!');
+      return;
+    }
+
+    if (!eventType || !eventName || !category || !type) {
+      alert('Sila lengkapkan semua maklumat pendaftaran!');
       return;
     }
 
@@ -1106,6 +1111,7 @@ const App: React.FC = () => {
                       onChange={e => setFormData({...formData, eventName: e.target.value})}
                       required
                     >
+                      <option value="">Sila Pilih Acara</option>
                       {Array.from(new Set(Object.values(EVENTS_CONFIG).flat().map(ev => ev.name))).map(name => (
                         <option key={name} value={name}>{name}</option>
                       ))}
@@ -1119,7 +1125,9 @@ const App: React.FC = () => {
                         className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none transition-all appearance-none bg-white"
                         value={formData.category}
                         onChange={e => setFormData({...formData, category: e.target.value})}
+                        required
                       >
+                        <option value="">Sila Pilih Kategori</option>
                         {CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
                       </select>
                     </div>
@@ -1129,7 +1137,9 @@ const App: React.FC = () => {
                         className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none transition-all appearance-none bg-white"
                         value={formData.position}
                         onChange={e => setFormData({...formData, position: parseInt(e.target.value) as 1|2|3|4})}
+                        required
                       >
+                        <option value="">Sila Pilih Kedudukan</option>
                         <option value={1}>🥇 Pertama (Emas)</option>
                         <option value={2}>🥈 Kedua (Perak)</option>
                         <option value={3}>🥉 Ketiga (Gangsa)</option>
@@ -1344,6 +1354,7 @@ const App: React.FC = () => {
                         value={eventFormData.title}
                         onChange={e => setEventFormData({...eventFormData, title: e.target.value})}
                       >
+                        <option value="">Sila Pilih Acara</option>
                         {Array.from(new Set(Object.values(EVENTS_CONFIG).flat().map(ev => ev.name))).map(name => (
                           <option key={name} value={name}>{name}</option>
                         ))}
@@ -1378,6 +1389,7 @@ const App: React.FC = () => {
                         value={eventFormData.location}
                         onChange={e => setEventFormData({...eventFormData, location: e.target.value})}
                       >
+                        <option value="">Sila Pilih Lokasi</option>
                         <option value="PADANG SMK LANDAS">PADANG SMK LANDAS</option>
                         <option value="DEWAN AL-FARABI, SMK LANDAS">DEWAN AL-FARABI, SMK LANDAS</option>
                       </select>
@@ -1441,6 +1453,7 @@ const App: React.FC = () => {
                         onChange={e => setRegFormData({...regFormData, kelas: e.target.value})}
                         required
                       >
+                        <option value="">Sila Pilih Kelas</option>
                         {KELAS_LIST.map(k => (
                           <option key={k} value={k}>{k}</option>
                         ))}
@@ -1478,11 +1491,13 @@ const App: React.FC = () => {
                             setRegFormData({
                               ...regFormData, 
                               eventType: type,
-                              eventName: EVENTS_CONFIG[type][0].name,
-                              category: type === 'Terbuka' ? 'Terbuka' : 'L1'
+                              eventName: '',
+                              category: ''
                             });
                           }}
+                          required
                         >
+                          <option value="">Sila Pilih Jenis Acara</option>
                           <option value="Balapan">Balapan</option>
                           <option value="Padang">Padang</option>
                           <option value="Terbuka">Terbuka</option>
@@ -1494,7 +1509,9 @@ const App: React.FC = () => {
                           className="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none bg-white"
                           value={regFormData.type}
                           onChange={e => setRegFormData({...regFormData, type: e.target.value as 'Utama' | 'Simpanan'})}
+                          required
                         >
+                          <option value="">Sila Pilih Status</option>
                           <option value="Utama">Atlet Utama</option>
                           <option value="Simpanan">Atlet Simpanan</option>
                         </select>
@@ -1509,8 +1526,10 @@ const App: React.FC = () => {
                         className="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none bg-white"
                         value={regFormData.eventName}
                         onChange={e => setRegFormData({...regFormData, eventName: e.target.value})}
+                        required
                       >
-                        {EVENTS_CONFIG[regFormData.eventType].map(ev => (
+                        <option value="">Sila Pilih Acara</option>
+                        {regFormData.eventType && (EVENTS_CONFIG[regFormData.eventType as keyof typeof EVENTS_CONFIG] || []).map(ev => (
                           <option key={ev.name} value={ev.name}>{ev.name}</option>
                         ))}
                       </select>
@@ -1522,13 +1541,17 @@ const App: React.FC = () => {
                         className="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none bg-white"
                         value={regFormData.category}
                         onChange={e => setRegFormData({...regFormData, category: e.target.value})}
+                        required
                       >
-                        {regFormData.eventType === 'Terbuka' ? (
-                          <option value="Terbuka">Terbuka (Semua Umur)</option>
-                        ) : (
-                          Object.entries(CATEGORY_MAP).filter(([k]) => k !== 'Terbuka').map(([key, label]) => (
-                            <option key={key} value={key}>{key} - {label}</option>
-                          ))
+                        <option value="">Sila Pilih Kategori</option>
+                        {regFormData.eventType && (
+                          regFormData.eventType === 'Terbuka' ? (
+                            <option value="Terbuka">Terbuka (Semua Umur)</option>
+                          ) : (
+                            Object.entries(CATEGORY_MAP).filter(([k]) => k !== 'Terbuka').map(([key, label]) => (
+                              <option key={key} value={key}>{key} - {label}</option>
+                            ))
+                          )
                         )}
                       </select>
                     </div>
@@ -1617,6 +1640,7 @@ const App: React.FC = () => {
                     value={selectedStartingEvent}
                     onChange={e => setSelectedStartingEvent(e.target.value)}
                   >
+                    <option value="">Sila Pilih Acara</option>
                     {Array.from(new Set(Object.values(EVENTS_CONFIG).flat().map(ev => ev.name))).map(name => (
                       <option key={name} value={name}>{name}</option>
                     ))}
@@ -1629,6 +1653,7 @@ const App: React.FC = () => {
                     value={selectedStartingCategory}
                     onChange={e => setSelectedStartingCategory(e.target.value)}
                   >
+                    <option value="">Sila Pilih Kategori</option>
                     {Object.keys(CATEGORY_MAP).map(cat => (
                       <option key={cat} value={cat}>{cat} - {CATEGORY_MAP[cat as keyof typeof CATEGORY_MAP]}</option>
                     ))}
@@ -1743,6 +1768,7 @@ const App: React.FC = () => {
                     value={selectedJudgesEvent}
                     onChange={e => setSelectedJudgesEvent(e.target.value)}
                   >
+                    <option value="">Sila Pilih Acara</option>
                     {Array.from(new Set(Object.values(EVENTS_CONFIG).flat().map(ev => ev.name))).map(name => (
                       <option key={name} value={name}>{name}</option>
                     ))}
@@ -1755,6 +1781,7 @@ const App: React.FC = () => {
                     value={selectedJudgesCategory}
                     onChange={e => setSelectedJudgesCategory(e.target.value)}
                   >
+                    <option value="">Sila Pilih Kategori</option>
                     {Object.keys(CATEGORY_MAP).map(cat => (
                       <option key={cat} value={cat}>{cat} - {CATEGORY_MAP[cat as keyof typeof CATEGORY_MAP]}</option>
                     ))}
