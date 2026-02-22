@@ -1,17 +1,23 @@
 {
-  "name": "smk-landas-sports-meet-management-system",
+  "name": "smk-landas-sports-management-2026",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "tsc --noEmit"
   },
   "dependencies": {
+    "@tailwindcss/vite": "^4.2.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.2.0",
+    "lucide-react": "^0.474.0",
+    "motion": "^12.34.3",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "lucide-react": "^0.574.0"
+    "tailwindcss": "^4.2.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
