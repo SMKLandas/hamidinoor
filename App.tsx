@@ -56,6 +56,7 @@ interface AthleteRegistration {
   house: HouseName;
   eventName: string;
   category: string;
+  kelas: string;
   type: 'Utama' | 'Simpanan';
   eventType: 'Balapan' | 'Padang' | 'Terbuka';
 }
@@ -105,6 +106,363 @@ const SCORING_LOGIC = {
 
 const CATEGORIES = ['L1', 'P1', 'L2', 'P2', 'L3', 'P3', 'Terbuka'];
 
+const STUDENTS_LIST = [
+  "CHE MUHAMAD SYAMSUL IQRAM BIN CHE ROSMADI",
+  "DARWISH BIN MOHD SHUKRI",
+  "MUHAMMAD AMMAR QUSYAIRI BIN ZAINAL",
+  "MUHAMMAD FIRASH DANIEL BIN MUHAMMAD SYAFIQ",
+  "MUHAMMAD HABIB HAIKAL BIN MOHD FADILLAH",
+  "MUHAMMAD HAIKAL HANIF BIN KAIROLBAHARIM",
+  "MUHAMMAD HAZWAN HUSYAIRIE BIN ABDUL MUHAIMIN",
+  "MUHAMMAD KHALISH ARYAN BIN MOHD KAMAL",
+  "MUHAMMAD NAUFAL WAQIUDDIN BIN ZULKIFLI",
+  "MUHAMMAD RIDHWAN BIN MOHD SHAZLAN DAILAMIE",
+  "NAZRIN RAFIQ BIN MOHD NAZARUDDIN",
+  "SHAFIQ FAIZOL ADZLI BIN CHE ROSLI",
+  "TUAN MUHAMMAD DANIEY HAKIMIEY BIN TUAN SYAHRUL NIZAN",
+  "ZUL IQRAM DARWISH BIN ZULKIFLI",
+  "FAIQA MALIHAH BINTI FAISAL",
+  "FAIQA MAWADDAH BINTI FAISAL",
+  "NUR AIRIS QISTINA BINTI MOHD HAFIZ",
+  "NUR ALIA NATASHA BINTI MUHAMMAD DAUD",
+  "NURALIA NATASHA BINTI MUHAMMAD DAUD",
+  "NURAIN QISTINA ERMANY BINTI AFFANDI",
+  "NURUL DANIA SAFIYYA BINTI RAMLI",
+  "NURUL NAJWA BINTI MOHD SAIFULLIZAM",
+  "PUTERI DALIANA QAISARA BINTI ABDUL LATIF",
+  "SYARIFAH NUR AISYAH UMAIRAH BINTI SYED MOHD NAZIR",
+  "WAN AMMNI QISTINA BINTI WAN KAMRU ZAMAN",
+  "WAN NUR ALIYSHA BINTI WAN AHMAD",
+  "ZAFIRAH AMANI BINTI ABDUL AZIZ",
+  "AISY HAIQAL NUR-IMAN BIN MOHD ZAIDI",
+  "AMMAR HARRAZ BIN MOHD AZLAN",
+  "IBNU QAYYUM BIN ROSLI",
+  "IKRAM JAILANI BIN SUFIAN",
+  "KU MUHAMMAD ZHARIF ARYAN BIN KU AHMAD FAIZI",
+  "MOHAMMAD IZHAN MUSLIM BIN MOHD SAIFUL NIZAR",
+  "MUHAMMAD AIDIL AMSHAR BIN MAT ZULKEFLI",
+  "MUHAMMAD ILHAM RIZQIE BIN MOHD RIZUAN",
+  "MUHAMMAD NURAFIQ ZAHIM BIN MOHD BARIZAN",
+  "MUHAMMAD SHARHAN BIN ZAMANI",
+  "TG NOR KHALISH RASHDAN BIN TG AZRI",
+  "DHIYA ADELIA SAFIYYAH BINTI MOHD NASIR",
+  "INTAN DANIA DANISH BINTI MOHD KHAIRIL AZHAR",
+  "MEDINNA ZEHRA BINTI MOHD MUHAIZUL",
+  "MELLISA DIANA BINTI NOR AZMI TARMIZEE",
+  "NUR ALISHA SAFIYA BINTI MOHD HAFIZ",
+  "NUR ANIS SYAKIRA BINTI MOHAMAD NOR IZWAN",
+  "NUR AUFA ZARA BINTI MOHD ZUL FAHMIE",
+  "NUR BALQIS MAISARAH BINTI MUHAMMAD AZREAN",
+  "NUR DHIA AMANDA BINTI MOHAMMAD ZEIREE",
+  "NUR FATIHAH UZWA BINTI ABDULLAH",
+  "NUR LAIYA SYAFARADANI BINTI SAZALI",
+  "NUR QISYA ADELIA BINTI AZMAN",
+  "NUR SYAWANI AFIQAH BINTI AZIZOL",
+  "NURUL AISYA AQIRA BINTI MOHD",
+  "NURUL ASMIDA EZRIN BINTI MD SALMIZANI",
+  "SHUHADA BINTI AWANG",
+  "ABDULLAH FARISHD BIN MADZLIN",
+  "MUHAMAD MIKAIL IZZ HAIKAL BIN MOHD AS'ARI",
+  "MUHAMMAD AL QAYYIM AMJAD BIN MOHD FAIZAL",
+  "MUHAMMAD ANNAS HAMADI BIN RIZAMAN",
+  "MUHAMMAD HAFIZAL BIN MOHD YASSIN",
+  "MUHAMMAD IMAN KHALID BIN MUHAMMAD RABBI",
+  "MUHAMMAD LUQMAN BIN MOHD NORHAFIZUDDIN SYAH",
+  "WAN MOHAMAD IZZUL IRSYAD BIN WAN ROSLAN",
+  "ANNUR AISYATUL SYIFA BINTI AZRIL HAFDIZ",
+  "DHIYA KHAYLA QAISARA BINTI MOHD HASLIZAN",
+  "NIK NUR IMAN ABYANA BINTI MUHAMAD SOFIAN",
+  "NUR ALYAA BATRISYIA BINTI RAMLI",
+  "NUR AMRINA RASYADA BINTI MOHD HIFZHAN",
+  "NUR DAMIA LIYANA KHAIZARA BINTI KHAIRIL HAZLI",
+  "NUR DAMIA QAISARA BINTI MOHD RIDZUAN",
+  "NUR ZAHRAA AISYAH BINTI MOHAMMAD SYAFIQ",
+  "NURUL SYIFA ATIQAH BINTI MOHD SUKRI",
+  "SITI NUR HADIRAH BINTI AYOB",
+  "WAN NUR AL SYAQIRIN BINTI WAN MOHD SUKRI",
+  "WAN NUR ARISSA IMANI BINTI WAN RASLI",
+  "WAN NUR ZARA IRDINA BINTI WAN MOHD ZULKIFLI",
+  "AHMAD DZULFIQAR BIN AHMAD SAYUTI",
+  "ARISF BIN ANUAR",
+  "KHAIRUL AIDIL NUFAEL BIN KAMARUL BAHAMAN",
+  "MUHAMMAD ADAM SYAFIQ BIN MOHD SHARUDDIN",
+  "MUHAMMAD ASRI BIN SUFIAN",
+  "MUHAMMAD AZEEM FAQHRY BIN NOR AZMI TARMIZEE",
+  "MUHAMMAD FAHRIN HAIKAL BIN MOHD FADILLAH",
+  "MUHAMMAD FAIQ HAFIZH BIN FAISA MAZLIM",
+  "MUHAMMAD FAKHRUL FAIZ BIN MOHD ZAKI",
+  "MUHAMMAD HAIKAL DANISH BIN ZUN @ ZULKIFLI",
+  "MUHAMMAD HARIS LUKHMAN BIN HISHAMBUDDIN",
+  "MUHAMMAD NAQIB AZWAR BIN RIZUAN",
+  "MUHAMMAD NUR FIRDAUS BIN MOHD SOFRI",
+  "MUHAMMAD SYAFIQ NAIM BIN ROSHDI",
+  "TENGKU MUHAMMAD ADHA SYAKIRIN BIN TENGKU HAMAT",
+  "ARISSA QAISARA BINTI MOHD FADRUL",
+  "DAHLIA DAFINA BINTI ABDUL HAKIM",
+  "NOOR SALSAZIRA BINTI AZMI",
+  "NOR AMALINA AMANI BINTI NORAPIZAN",
+  "NUR ALYAA' SYAZANA BINTI AZHAR",
+  "NUR AMIERA DAHLIA BINTI RAMZI",
+  "NUR HIDAYAH BINTI GHAZALI",
+  "NUR IRIS SAFIYA BINTI MOHD FAIZAL",
+  "NUR UMMAIRAH SYAKINAZ BINTI MOHD FAIZAL",
+  "NUR ZAHIRAH BINTI MOHD RUSDI",
+  "NUR ZAHIRAH NABIHAH BINTI ABDUL GHANI",
+  "NURUL NAZIRA IZZANI BINTI MD SALMIZANI",
+  "QASEH QALISHA BINTI ABDUL HAFIZ",
+  "ADAM HAQIMIE BIN ZAINUDDIN",
+  "AHMAD AMSHAR BIN MOHD FAZLIN",
+  "AMIR ZILL ASYRAF BIN AMIR KHALED",
+  "D'ANAS ADRIAN BIN DZULKIFLI",
+  "MOHAMAD AQEEF RAYYAN BIN MOHD IDZUAN",
+  "MOHAMMAD AMIRUL HAKIM BIN AHMAD RAFAIE",
+  "MUHAMMAD AL HAKIMI BIN MOHD NOH",
+  "MUHAMMAD AMIRUL HAKIM BIN MOHD RIDZUAN",
+  "MUHAMMAD AMMAR SYAZWAN BIN KHAIRIL HAZLI",
+  "MUHAMMAD AZFAR HAFIZ BIN MOHD HELMI",
+  "MUHAMMAD HAFIY ELHAM BIN MUHAMAD HAFIZI",
+  "MUHAMMAD HUSNUL IMAN BIN TAMIZI",
+  "SHAHRUL ISKANDAR BIN ABDULLAH",
+  "WAN MOHAMAD AZRIL WAIMAN BIN WAN MOHD SYUKRI",
+  "AISARA HUMAIRA BINTI RIZAL JAMALULLAIL",
+  "AN NUR DAMIA UMAIRA BINTI MOHD ZAMRI",
+  "AQILAH ZAHRA BINTI MOHD ZAHILI",
+  "FATIN NURDAMIA BINTI SAUPI",
+  "NIK NUR AISYAH BINTI NIK MUHAMAD HAFIZ",
+  "NUR AIRYSHA INSYIRAH BINTI MOHD KAMAL ZULKIFLI",
+  "NUR AMMENA UMAIRAH RASHIQA BINTI ZAWAWI",
+  "NUR ELYSHAFIRA BINTI MAZLAN",
+  "NUR MARISSA QAISARA BINTI SUHAIMI",
+  "NUR NAZEEHA BINTI MOHD ALIAS",
+  "NUR SYAFIQAH AMIRAH BINTI ABDULLAH",
+  "MUHAMMAD ADAM HARRIS BIN MOHD FAUZI",
+  "MUHAMMAD AKID BIN KHAIRUDIN",
+  "MUHAMMAD AMZAR MIRZA BIN MOHD TAMIMI",
+  "MUHAMMAD ARSYAD SAFIUDDIN BIN AZRIL HAFDIZ",
+  "MUHAMMAD HAFIDH IDLAN BIN MOHD SHARIF",
+  "MUHAMMAD ILHAM FARRIS BIN MOHD SYAHRUL FADLEYSYAM",
+  "MUHAMMAD SYAAKIR AMEEN BIN MOHD SAHRIL",
+  "MUHAMMAD ZHAFRAN BIN MOHD ZULKIFLI",
+  "MUKHRIZ BIN MUZIR",
+  "NASRUNISMADI BIN ZAKARIA",
+  "TUAN MUHAMMAD ARASY ARSYAD BIN TUAN FAIZOL RIZAN",
+  "ZULFAZLI BIN ZUZUKI",
+  "NUR AIESHA NAZIIHAH BINTI MOHAMAD ANUAR",
+  "NUR AUNI AQILAH BINTI AIMAN",
+  "NUR BALQIS DAMIA SORFINA BINTI MOHD HAFIZ",
+  "NUR EIMAN EIZAJANNAH BINTI ROHADI",
+  "NUR SYASHA ELYANA BINTI MOHD RIZUAN",
+  "SITI SURIA SYAFIQAH BINTI MOHD BUKARIM",
+  "AHMAD HADIF BIN MOHD SUKRI HAMIDI",
+  "AMMAR ARFAN BIN AZIZI",
+  "FARISH HADIF BIN FAISA MAZLIM",
+  "FARISH HASIF BIN FAISA MAZLIM",
+  "MUHAMMAD ADAM FARISHANIF BIN RAZAMI",
+  "MUHAMMAD ASYRAAF MUHAIMIN BIN ZAKI",
+  "MUHAMMAD AZRI IZZUDIN BIN RAMI LADEN",
+  "MUHAMMAD FARHAN BIN ABD HALIM",
+  "MUHAMMAD FIRDAUS AL HAFIZ BIN SHAM SULIMAN",
+  "MUHAMMAD HAIQAL BIN ZUKERI",
+  "MUHAMMAD KHAIRUL AZWAN BIN MOHD KAMARUZAMAN",
+  "MUHAMMAD SHAHRIL FARHAN BIN MOHAMAD SAKRI",
+  "MUHAMMAD SHAKIR DARWISY BIN MOHD SYAMSUL BAHARI",
+  "MUHAMMAD SYAFIIE BIN SAMSUDDIN",
+  "MUHAMMAD SYAMIM DANISH BIN MOHD SHAFIZA",
+  "WAN MUHAMMAD AFKAR BIN WAN HASSAN",
+  "DAMIA BINTI MOHD SHUKRI",
+  "NUR ALLISYA UMAIRA DANIA BINTI MOHAMMAD SHAM ASROY",
+  "NUR ALYA INSYIRAH BINTI CHE MOHD ZAIDI",
+  "NUR AQILAH ZAHIDAH BINTI AWANG",
+  "NUR LIYANA NASUHA BINTI MOHD SHAZLAN DAILAMIE",
+  "NURUL FARAH DAMIA BINTI LUTFI",
+  "QASEH FARISHA AMIRA BINTI ARIFFIN",
+  "SHARIFAH SYAZA AMANI BINTI SYED AHMAD SAHABUDDIN",
+  "ABDULLAH FAHMI BIN ABDULLAH",
+  "AFIQ FARHAN ZIQRI BIN SAMRI",
+  "AHMAD YUSUF FARHAN BIN ZAMRI",
+  "HARITH AMNAN BIN MOHD REDZUAN",
+  "MOHAMAD NOR IQBAL BIN MOHAMAD RIDZUAN",
+  "MUHAMMAD AMILRUL HAKIM BIN ABU BAKAR",
+  "MUHAMMAD AQIL BIN MOHAMMAD MUSTAKIM",
+  "MUHAMMAD NUR IRZAN BIN MOHD NAZRI",
+  "SYAKIR NAEIMAN BIN SHAHRUL NIZAM",
+  "NOOR ATIQAH BINTI MOHD NOOR",
+  "NOR QARIMAH ANNISA BINTI MOHD ZUKI",
+  "NUR ADIANA KALISHA BINTI ABDULLAH",
+  "NUR AINA BINTI ZAMRI",
+  "NUR ALYA BATRISYA BINTI AHMAD ZAKI",
+  "NUR ALYA NAFISYA BINTI MOHD SAIFUL NIZAR",
+  "NUR AMIRA SOLEHAH BINTI ABDULLAH",
+  "NUR ANEESA SYAHIRA BINTI MOHD NASIR",
+  "NUR ANIS ADILA BINTI MOHAMAD AZROL",
+  "NUR HANIS HALISYA BINTI MOHD AZMI",
+  "NUR IRDINA MARSYA BINTI MOHD IRWAN",
+  "NUR MAZARINA BINTI SAMSUDDIN",
+  "NUR ZAFIRA AILA BINTI MUHAMMAD ZAINI",
+  "NURUSSA'ADAH BINTI RAZMIDI",
+  "SITI NUR ZAHIRAH BINTI MURAD",
+  "WAN NURUL AINUL NADHIRAH BINTI WAN MOHD YUSOF",
+  "ADAM HAIKAL BIN ISMAIL",
+  "AHMAD YUSUF FAHMI BIN ZAMRI",
+  "MUHAMMAD AMSYAR MIRZA BIN MOHD TAMIMI",
+  "MUHAMMAD RAFI'UDDIN BIN ROSLAN",
+  "MUHAMMAD SYAHMI ZUFAYRI BIN MOHD SUHAIMI",
+  "MUHAMMAD ZIKIR BIN ZAMANI",
+  "WAN NAQIUDDIN AZIM BIN WAN BISTAMIN",
+  "AINUR ALISA BINTI DZULKIFLI",
+  "ANIS FARISHA BINTI AHMAD SANUSI",
+  "CHE NUR QISTINA UMAIRAH BINTI CHE ROSMADI",
+  "CHE URYA INSYIRAH BINTI MOHAMAD SHUKRI",
+  "NIK ZAHRA MAISARA BINTI NIK SYUKRI",
+  "NUR ALEESYA YASMIN BINTI MOHAMAD ZURAIDI",
+  "NUR ANISA ALIYANA BINTI MOHD FADLUR RAHMAN",
+  "NUR DAMIA ERISYA BINTI MOHD YUSOF",
+  "NUR QURRATUL AINI BINTI KAMARUDDIN",
+  "NUR SYAHIRAH FAZRINA BINTI ABDULLAH",
+  "NURSYAKIRA ZULFAH BINTI MUHAMMAD",
+  "SITI AISYAH BINTI MOHD RASHID",
+  "SUHAILA BINTI AWANG",
+  "WAN NUR DANISHSYA FARISYA BINTI WAN MOHD SUKRI",
+  "AHMAD FIRDAUS BIN HASIM",
+  "AIMAN BIN AHMAD SUHARDY",
+  "DZUL IRWAN BIN ZULKIFLI",
+  "MOHAMAD AZMI BIN MOHD RUJIDIN",
+  "MOHAMMAD FAIEZ AIMAN BIN ABDUL RAHMAN",
+  "MUHAMMAD AIDIL IKHWAN BIN MOHD ABDUL SALAM",
+  "MUHAMMAD AMIR DANIAL BIN JAFFAR",
+  "MUHAMMAD AQIL DANISH BIN ZULKIFLI",
+  "MUHAMMAD IDHAM BIN MAZALAM",
+  "MUHAMMAD IKRAM DANIEL BIN ABDULLAH",
+  "MUHAMMAD NUBHAN AIMAN BIN ABDULLAH",
+  "MUHAMMAD SHAZUAN SHAH BIN ROSIDI",
+  "NAIM NAZMI BIN MOHD NAZARUDDIN",
+  "WAN MUHAMMAD ADAM DANIAL BIN ABDULLAH",
+  "WAN MUHAMMAD ANIQUE HILMI BIN WAN KAMRU ZAMAN",
+  "WAN MUHAMMAD AZWAR BIN WAN MOHD TARMIZI",
+  "WAN SAIFUL AZAM BIN WAN MOHD SHAHRIL",
+  "BATRISYA IZZATI BINTI MOHD SAIFULLIZAM",
+  "FAQIHAH BINTI MOHD EDI FADLI",
+  "INTAN DURRANI DANISH BINTI MOHD KHAIRIL AZHAR",
+  "SITI NUR DAMIA SYAMIMI BINTI MOHD RIDZUAN",
+  "ZULAIKHA HUMAIRA BINTI MOHD ZAKHIRI",
+  "CHE AKIF ASYRAAF BIN CHE ROSMIZAM",
+  "MUHAFIAN BIN ABDUL RAZAK",
+  "MUHAMMAD ADAM SHAMIL BIN MOHD SAYUTI",
+  "MUHAMMAD AQIF KHAIRUDDIN BIN SHAROL NIZAM",
+  "MUHAMMAD ATIF HUZAIMAN BIN ABDULLAH",
+  "MUHAMMAD HAIKAL BIN SANUSI",
+  "SHAFIQ RAMDAN FAIZI BIN CHE ROSLI",
+  "TENGKU MUHAMMAD AKMAL MUHAIMIN BIN SUFIAN",
+  "WAN MUHAMMAD AQIL DARWISH BIN WAN MOHD RIZAL",
+  "AINA NABIHAH BINTI ZAHARI",
+  "AQILAH QISTINA BINTI ZULBAHARIN",
+  "DAMIA DARWISYAH BINTI AHMAD",
+  "FAEIZIA MAYESA BINTI FAISAL",
+  "NUR AINANADIA BINTI NOR AZMI",
+  "NUR ALIYA ATIKAH BINTI MOHD NOH",
+  "NUR ALYAA FARHANA BINTI RIZAMAN",
+  "NUR ARINA BATRISYA BINTI ZAINUDDIN",
+  "NUR KHAIRINNATASYA BINTI KHAIRUDI",
+  "NUR LIYANA HUMAIRA BINTI ABDULLAH",
+  "NUR QISHA QAISARA BINTI MOHD NUZUL HAKIMI",
+  "NUR UMAIRAH SYAHMINA BINTI MOHD KAMARUZAMAN",
+  "NURUL NAJWA BINTI KAMARUL ZAMAN",
+  "NURUL SYUHADA BINTI MAT YAMAN",
+  "QASEH QALESYA BINTI MOHAMAD",
+  "SITI AIDA NATAHSA BINTI MOHD NORZAKI",
+  "SITI HANIS SYAFIQAH BINTI AYOB",
+  "SITI NURBALQIS BINTI MOHD ZULKAFLI",
+  "WAN NUR QALESYA BINTI WAN SAIFULBAHRIM",
+  "MUHAMMAD AZIM BIN MOHD ZULKARNAEN",
+  "MUHAMMAD HAZIQ BIN ISHAHMUDDIN",
+  "WAN RAFIUDDIN AFSAL BIN WAN BISTAMIN",
+  "MAYA QISTINA BINTI ABDULLAH",
+  "NISRIN ASYRANI BINTI KHAIRUDIN",
+  "NUR AIRA SOFIA BINTI ZULKIFLI",
+  "NUR ANISYAH BINTI MAZLAN",
+  "NUR DAMIA QISTINA BINTI SUHAIMI",
+  "NUR IMAN UMAIRA BINTI MOHD SYAHRUL FADLEYSYAM",
+  "NUR KAMILIA FARHANA BINTI MOHD KHAIRUL AZWAN",
+  "SITI ALIA FAZLIANA BINTI PAZLI @ MOHD PAZLI",
+  "SITI NADYA BINTI IBRAHIM",
+  "SITI NUR ADIERA FATHIAH BINTI MOHD SHAMPIAH",
+  "WAN NUR DAMIA ADLINA BINTI WAN SHAHFYZULLAH",
+  "AHMAD FAKHRUDDIN BIN ANUAR",
+  "D'ADAM RAYEAN BIN DZULKIFLI",
+  "IMADUDDIN ZULHUSNI BIN YUSSOF",
+  "ISMA HARIS BIN SABRI",
+  "MOHD ZAFRIE SHAH BIN MUHAMMAD ZAINI",
+  "MUHAMAD DAMIAN HADZIQ BIN MOHD RIDZUAN",
+  "MUHAMMAD AMIRUL AIMAN BIN MOHD YUSOF",
+  "MUHAMMAD HADZRIQ IRSHAD BIN MOHD SHARIF",
+  "MUHAMMAD HARIZ BIN ZAHARI",
+  "MUHAMMAD RAFIEQZ DARWISY BIN ABDULLAH",
+  "MUHAMMAD THAQIFUDDIN BIN MOHD HELMI",
+  "PUTERA AHMAD ADIL BIN MOHAMAD SAKRI",
+  "WAN DANISH SYAHMI BIN WAN MOHD SHAHRIL",
+  "WAN HAZRIQ BIN WAN AHMAD",
+  "WAN MUHAMMAD IQBAL BIN WAN MOHD SHAFFIE",
+  "AZRI AFIQ BIN AZIZI",
+  "MUHAMAD ALIF IKWAN BIN BAHARUDDIN",
+  "MUHAMMAD ADAM FARIS BIN BADERI @ NAZRI",
+  "MUHAMMAD AIMAN HAIKAL BIN RAMLI",
+  "MUHAMMAD HAFIZ HAIQAL BIN MOHD JUM HARIRAN",
+  "MUHAMMAD IKMAL HAKIM BIN MOHD FAIZAL",
+  "MUHAMMAD RIZMAN BIN JOHAN",
+  "MUHAMMAD YUSUFF HAIKAL BIN MOHD SHUKRI",
+  "ZULKHAIMI BIN ZULKIFLEE",
+  "IWANA FAKHIRA BINTI HASSAN",
+  "NORHAZIQAH BINTI AHMAD SAFILA",
+  "NUR ADIANA ALEESYA BINTI ABDULLAH",
+  "NUR AIN SYAFIQA BINTI MOHD ZAPANI",
+  "NUR ALIYA SHAFIQAH BINTI ZULMI",
+  "NUR AMELIA NATASHA BINTI ABDUL RAHMAN",
+  "NUR AMIRAH DALILA BINTI YUSOF",
+  "NUR INSYIRAH AYUNI BINTI MAT DIN",
+  "NUR SUHAILA BINTI NGAH",
+  "NURUL AIN SYAFINAZ BINTI MOHD FADILLAH",
+  "NURUL AINA BALQIS BINTI ADENAN",
+  "NURUL DAMIA ASHIKIN BINTI MOHAMAD NOR IZWAN",
+  "SITI NUR AUNI FAREESYA BINTI ABDULLAH",
+  "WAN SYARFA' HUMAIRA BINTI WAN MOHD SAHRUN",
+  "ZARA NAJWA BINTI AMERANG",
+  "ADAM DANIAL ZULBAHARIN BIN ABDUL HAFIZ",
+  "AHMAD IRFAN BIN MOHD RIDHWAN",
+  "MUHAMAD SAFWAN BIN AZAHARI",
+  "MUHAMMAD DANISH ASYRAAF BIN MOHD KHAIRUL AZWAN",
+  "MUHAMMAD SHAFIQ HAZIM BIN AB HALIM",
+  "WAN HAZWAN AFIQ BIN WAN ABD MANAN",
+  "ZULZIKRY BIN ZUKRI",
+  "NOR AKMA ADILA BINTI MAZALAM",
+  "NUR ADAWIYAH BINTI HALIAS",
+  "NUR AUNI DAMIA BINTI ABDUL SALAAM",
+  "NUR EIZYANIE EIFARHAH BINTI ROHADI",
+  "NUR HANISAH BINTI ABDULLAH",
+  "SITI SURIA RAMADHANI BINTI MOHD BUKARIM",
+  "WAN NOR AYUNIE BINTI WAN HADI",
+  "AHMAD SYAKIR AL ZULFAIRIE BIN MUHAMMAD",
+  "AMSYAR MUSTAQIM BIN MOHD FAIZUL",
+  "MUHAMMAD DANISH HAQEM BIN MOHD ADLI",
+  "DAMIA FARISYA BINTI ABDULLAH",
+  "DEYANA ARISYA BINTI MOHD TAUFIK",
+  "FIRZANAH MUSFIRAH BINTI FAISAL",
+  "NUR FARAHIYA BINTI HAMIDON",
+  "NUR HAZLEEN IZYAN BINTI MOHD REDZUAN",
+  "NUR LILY SHAMIMI BINTI SAZALI",
+  "NUR MALIYANA BINTI SAMSUDDIN",
+  "NURUL ALIS ARISYA BINTI RAMLI",
+  "NURUL FATIHAH BINTI ABDUL MALIK",
+  "NURUL IMAN BINTI MOHD ASMAWI"
+];
+
+const KELAS_LIST = [
+  "1 AL HAMBALI", "1 AL MALIKI", "1 AL SYAFIE",
+  "2 AL HAMBALI", "2 AL MALIKI", "2 AL SYAFIE",
+  "3 AL HAMBALI", "3 AL MALIKI", "3 AL SYAFIE",
+  "4 AL-HAMBALI", "4 AL-MALIKI", "4 AL-SYAFIE",
+  "5 AL HANAFI", "5 AL-HAMBALI", "5 AL-MALIKI", "5 AL-SYAFIE"
+];
+
 // --- Main App Component ---
 
 const App: React.FC = () => {
@@ -133,13 +491,14 @@ const App: React.FC = () => {
     eventType: 'Balapan' as 'Balapan' | 'Padang' | 'Terbuka',
     eventName: '100M',
     category: 'L1',
+    kelas: '1 AL HAMBALI',
     type: 'Utama' as 'Utama' | 'Simpanan'
   });
   const [eventFormData, setEventFormData] = useState({
-    title: '',
+    title: '100M',
     date: '',
     time: '',
-    location: ''
+    location: 'PADANG SMK LANDAS'
   });
   const [isExporting, setIsExporting] = useState(false);
   const dashboardRef = useRef<HTMLDivElement>(null);
@@ -265,10 +624,15 @@ const App: React.FC = () => {
 
   const handleAddRegistration = (e: React.FormEvent) => {
     e.preventDefault();
-    const { athleteName, house, eventName, category, type, eventType } = regFormData;
+    const { athleteName, house, eventName, category, type, eventType, kelas } = regFormData;
 
     if (!athleteName) {
       alert('Sila masukkan nama atlet!');
+      return;
+    }
+
+    if (!kelas) {
+      alert('Sila pilih kelas!');
       return;
     }
 
@@ -330,7 +694,7 @@ const App: React.FC = () => {
     };
 
     setRegistrations([...registrations, newReg]);
-    setRegFormData({ ...regFormData, athleteName: '' });
+    setRegFormData({ ...regFormData, athleteName: '', kelas: KELAS_LIST[0] });
     alert('Pendaftaran atlet berjaya!');
   };
 
@@ -797,8 +1161,9 @@ const App: React.FC = () => {
                   <div className="space-y-2">
                     <label className="text-sm font-bold text-slate-700">Nama Atlet</label>
                     <input 
+                      list="students-list"
                       type="text"
-                      placeholder="Masukkan nama penuh atlet"
+                      placeholder="Cari atau taip nama atlet"
                       className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                       value={formData.athleteName}
                       onChange={e => setFormData({...formData, athleteName: e.target.value})}
@@ -973,13 +1338,16 @@ const App: React.FC = () => {
                   <form onSubmit={(e) => { handleAddEvent(e); document.getElementById('add-event-modal')?.classList.add('hidden'); }} className="p-6 space-y-4">
                     <div className="space-y-1">
                       <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Nama Acara</label>
-                      <input 
-                        type="text" 
+                      <select 
                         required
-                        className="w-full px-4 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full px-4 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500 bg-white"
                         value={eventFormData.title}
                         onChange={e => setEventFormData({...eventFormData, title: e.target.value})}
-                      />
+                      >
+                        {Array.from(new Set(Object.values(EVENTS_CONFIG).flat().map(ev => ev.name))).map(name => (
+                          <option key={name} value={name}>{name}</option>
+                        ))}
+                      </select>
                     </div>
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-1">
@@ -1004,12 +1372,15 @@ const App: React.FC = () => {
                     </div>
                     <div className="space-y-1">
                       <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Lokasi</label>
-                      <input 
-                        type="text" 
-                        className="w-full px-4 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500"
+                      <select 
+                        required
+                        className="w-full px-4 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-blue-500 bg-white"
                         value={eventFormData.location}
                         onChange={e => setEventFormData({...eventFormData, location: e.target.value})}
-                      />
+                      >
+                        <option value="PADANG SMK LANDAS">PADANG SMK LANDAS</option>
+                        <option value="DEWAN AL-FARABI, SMK LANDAS">DEWAN AL-FARABI, SMK LANDAS</option>
+                      </select>
                     </div>
                     <button type="submit" className="w-full bg-blue-600 text-white py-3 rounded-xl font-bold shadow-lg hover:bg-blue-700 transition-all mt-2">
                       Simpan Acara
@@ -1047,13 +1418,33 @@ const App: React.FC = () => {
                     <div className="space-y-2">
                       <label className="text-sm font-bold text-slate-700">Nama Atlet</label>
                       <input 
+                        list="students-list"
                         type="text"
-                        placeholder="Masukkan nama penuh atlet"
+                        placeholder="Cari atau taip nama atlet"
                         className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 outline-none transition-all"
                         value={regFormData.athleteName}
                         onChange={e => setRegFormData({...regFormData, athleteName: e.target.value})}
                         required
                       />
+                      <datalist id="students-list">
+                        {STUDENTS_LIST.map(name => (
+                          <option key={name} value={name} />
+                        ))}
+                      </datalist>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-bold text-slate-700">Kelas</label>
+                      <select 
+                        className="w-full px-4 py-3 rounded-xl border border-slate-200 outline-none bg-white"
+                        value={regFormData.kelas}
+                        onChange={e => setRegFormData({...regFormData, kelas: e.target.value})}
+                        required
+                      >
+                        {KELAS_LIST.map(k => (
+                          <option key={k} value={k}>{k}</option>
+                        ))}
+                      </select>
                     </div>
 
                     <div className="space-y-2">
@@ -1174,6 +1565,7 @@ const App: React.FC = () => {
                           </div>
                           <div>
                             <h4 className="font-bold text-slate-900 text-sm">{reg.athleteName}</h4>
+                            <p className="text-[10px] text-blue-600 font-bold uppercase">{reg.kelas}</p>
                             <p className="text-xs text-slate-500">{reg.eventName} ({reg.category})</p>
                             <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full mt-1 inline-block ${reg.type === 'Utama' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>
                               {reg.type}
@@ -1276,6 +1668,7 @@ const App: React.FC = () => {
                         <tr className="bg-slate-100">
                           <th className="border-2 border-slate-900 p-3 text-sm font-black uppercase w-16">No</th>
                           <th className="border-2 border-slate-900 p-3 text-sm font-black uppercase text-left">Nama Atlet</th>
+                          <th className="border-2 border-slate-900 p-3 text-sm font-black uppercase w-24">Kelas</th>
                           <th className="border-2 border-slate-900 p-3 text-sm font-black uppercase w-32">Rumah</th>
                           <th className="border-2 border-slate-900 p-3 text-sm font-black uppercase w-32">Status</th>
                           <th className="border-2 border-slate-900 p-3 text-sm font-black uppercase w-24">Hadir</th>
@@ -1289,6 +1682,7 @@ const App: React.FC = () => {
                             <tr key={reg.id}>
                               <td className="border-2 border-slate-900 p-3 text-center font-bold">{index + 1}</td>
                               <td className="border-2 border-slate-900 p-3 font-bold uppercase">{reg.athleteName}</td>
+                              <td className="border-2 border-slate-900 p-3 text-center font-bold text-xs">{reg.kelas}</td>
                               <td className="border-2 border-slate-900 p-3 text-center font-bold">{reg.house}</td>
                               <td className="border-2 border-slate-900 p-3 text-center text-xs font-black uppercase">{reg.type}</td>
                               <td className="border-2 border-slate-900 p-3"></td>
@@ -1296,7 +1690,7 @@ const App: React.FC = () => {
                           ))}
                         {registrations.filter(r => r.eventName === selectedStartingEvent && r.category === selectedStartingCategory).length === 0 && (
                           <tr>
-                            <td colSpan={5} className="border-2 border-slate-900 p-10 text-center italic text-slate-400">
+                            <td colSpan={6} className="border-2 border-slate-900 p-10 text-center italic text-slate-400">
                               Tiada atlet didaftarkan untuk acara dan kategori ini.
                             </td>
                           </tr>
@@ -1400,6 +1794,7 @@ const App: React.FC = () => {
                         <tr className="bg-slate-100">
                           <th className="border-2 border-slate-900 p-3 text-xs font-black uppercase w-12">No</th>
                           <th className="border-2 border-slate-900 p-3 text-xs font-black uppercase text-left">Nama Atlet</th>
+                          <th className="border-2 border-slate-900 p-3 text-xs font-black uppercase w-20">Kelas</th>
                           <th className="border-2 border-slate-900 p-3 text-xs font-black uppercase w-24">Rumah</th>
                           
                           {getEventType(selectedJudgesEvent) === 'Balapan' ? (
@@ -1425,6 +1820,7 @@ const App: React.FC = () => {
                             <tr key={reg.id}>
                               <td className="border-2 border-slate-900 p-3 text-center font-bold">{index + 1}</td>
                               <td className="border-2 border-slate-900 p-3 font-bold uppercase text-sm">{reg.athleteName}</td>
+                              <td className="border-2 border-slate-900 p-3 text-center font-bold text-[10px]">{reg.kelas}</td>
                               <td className="border-2 border-slate-900 p-3 text-center font-bold text-sm">{reg.house}</td>
                               
                               {getEventType(selectedJudgesEvent) === 'Balapan' ? (
@@ -1445,7 +1841,7 @@ const App: React.FC = () => {
                           ))}
                         {registrations.filter(r => r.eventName === selectedJudgesEvent && r.category === selectedJudgesCategory && r.type === 'Utama').length === 0 && (
                           <tr>
-                            <td colSpan={getEventType(selectedJudgesEvent) === 'Padang' ? 8 : 5} className="border-2 border-slate-900 p-10 text-center italic text-slate-400">
+                            <td colSpan={getEventType(selectedJudgesEvent) === 'Padang' ? 9 : 6} className="border-2 border-slate-900 p-10 text-center italic text-slate-400">
                               Tiada atlet utama didaftarkan untuk acara ini.
                             </td>
                           </tr>
