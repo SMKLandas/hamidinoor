@@ -38,6 +38,7 @@ interface ResultEntry {
   house: HouseName;
   position: 1 | 2 | 3 | 4;
   athleteName: string;
+  record: string;
   points: number;
   timestamp: number;
 }
@@ -482,7 +483,8 @@ const App: React.FC = () => {
     category: '',
     house: HouseName.TEMENGGUNG,
     position: 0 as any,
-    athleteName: ''
+    athleteName: '',
+    record: ''
   });
 
   const [regFormData, setRegFormData] = useState({
@@ -583,6 +585,7 @@ const App: React.FC = () => {
     setFormData({
       ...formData,
       athleteName: '',
+      record: '',
       position: 0 as any
     });
     alert('Keputusan berjaya ditambah!');
@@ -1203,6 +1206,17 @@ const App: React.FC = () => {
                     </datalist>
                   </div>
 
+                  <div className="space-y-2">
+                    <label className="text-sm font-bold text-slate-700">Masa / Jarak / Ketinggian</label>
+                    <input 
+                      type="text"
+                      placeholder="Contoh: 12.5s, 5.20m, 1.45m"
+                      className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                      value={formData.record}
+                      onChange={e => setFormData({...formData, record: e.target.value})}
+                    />
+                  </div>
+
                   <button 
                     type="submit"
                     className="w-full bg-blue-600 text-white py-4 rounded-2xl font-bold text-lg shadow-xl shadow-blue-200 hover:bg-blue-700 hover:scale-[1.01] transition-all flex items-center justify-center gap-2"
@@ -1258,6 +1272,12 @@ const App: React.FC = () => {
                             <span className={`font-bold ${HOUSE_CONFIG[result.house].text}`}>{result.house}</span>
                             <span className="text-slate-300">•</span>
                             <span>{result.athleteName}</span>
+                            {result.record && (
+                              <>
+                                <span className="text-slate-300">•</span>
+                                <span className="bg-slate-100 px-2 py-0.5 rounded text-xs font-bold text-slate-600">{result.record}</span>
+                              </>
+                            )}
                           </p>
                         </div>
                       </div>
