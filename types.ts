@@ -1,77 +1,59 @@
 
-export enum House {
-  Bendahara = 'Bendahara',
-  Temenggung = 'Temenggung',
-  Laksamana = 'Laksamana',
-  Syahbandar = 'Syahbandar'
+export enum HouseName {
+  BENDAHARA = 'Bendahara',
+  TEMENGGUNG = 'Temenggung',
+  LAKSAMANA = 'Laksamana',
+  SYAHBANDAR = 'Syahbandar'
 }
 
-export enum Category {
-  L1 = 'L1', // Lelaki T1, T2, T3
-  P1 = 'P1', // Perempuan T1, T2, T3
-  L2 = 'L2', // Lelaki T4, T5
-  P2 = 'P2', // Perempuan T4, T5
-  Terbuka = 'Terbuka'
-}
-
-export enum EventType {
-  Track = 'Balapan',
-  Field = 'Padang'
-}
-
-export enum ParticipantType {
-  Individual = 'Individu',
-  Group = 'Berkumpulan'
-}
-
-export enum ParticipationRole {
-  Main = 'Utama',
-  Reserve = 'Simpanan'
-}
+export type Category = 'L15' | 'L18' | 'P15' | 'P18';
+export type EventType = 'Balapan' | 'Padang';
+export type ParticipantType = 'Individu' | 'Berkumpulan';
 
 export interface Student {
   id: string;
-  no_badan: string;
+  noBadan: string;
   nama: string;
   tingkatan: string;
   kategori: Category;
-  rumah: House;
-  jenis_kelamin: 'Lelaki' | 'Perempuan';
+  rumahSukan: HouseName;
 }
 
-export interface Event {
+export interface SportsEvent {
   id: string;
-  nama_acara: string;
+  namaAcara: string;
   kategori: Category;
-  jenis_acara: EventType;
-  jenis_peserta: ParticipantType;
+  jenisAcara: EventType;
+  jenisPeserta: ParticipantType;
 }
 
 export interface Participation {
   id: string;
   studentId: string;
   eventId: string;
-  role: ParticipationRole;
-}
-
-export interface Schedule {
-  id: string;
-  eventId: string;
-  masa: string;
-  lokasi: string;
-  pusingan: string;
 }
 
 export interface Result {
   id: string;
   eventId: string;
   studentId: string;
-  tempat: number;
-  hasil: string;
-  bonusRekod: boolean;
+  kedudukan: number; // 1 to 5
+  catatan: string;
+  rekodBaru: boolean;
+  points: number;
 }
 
-export interface HouseScore {
-  house: House;
-  totalPoints: number;
+export interface ScheduleItem {
+  id: string;
+  masa: string;
+  acara: string;
+  lokasi: string;
+  pusingan: string;
+  status: 'Akan Datang' | 'Sedang Berlangsung' | 'Selesai';
+}
+
+export interface HouseStats {
+  name: HouseName;
+  points: number;
+  rank: number;
 }
