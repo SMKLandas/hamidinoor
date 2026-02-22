@@ -1,87 +1,36 @@
 
 <!DOCTYPE html>
-<html lang="ms">
+<html lang="ms" class="h-full">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SMK Landas Sports Meet 2026</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- PDF Generation Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f8fafc;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        /* Hide scrollbar but allow scrolling */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        @keyframes slideIn {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        .animate-slide-in {
-            animation: slideIn 0.3s ease-out;
-        }
-        @keyframes scaleUp {
-            from { transform: scale(0.95); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        .animate-scale-up {
-            animation: scaleUp 0.2s ease-out;
-        }
-        
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 10px;
-        }
-
-        /* Print Logic */
-        @media print {
-            .no-print { display: none !important; }
-            body { background-color: white !important; }
-            .container { width: 100% !important; max-width: 100% !important; margin: 0 !important; }
-            table { border-collapse: collapse !important; width: 100% !important; }
-            th, td { border: 1px solid black !important; color: black !important; }
-        }
-
-        /* Input overrides for mobile */
-        input, select, textarea {
-            font-size: 16px !important; /* Prevents iOS zoom on focus */
-        }
-    </style>
-<script type="importmap">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Kejohanan Sukan SMK Landas 2026</title>
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script type="importmap">
 {
   "imports": {
     "react": "https://esm.sh/react@^19.2.4",
+    "react-dom": "https://esm.sh/react-dom@^19.2.4",
+    "react-dom/client": "https://esm.sh/react-dom@^19.2.4/client",
+    "lucide-react": "https://esm.sh/lucide-react@^0.474.0",
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.574.0"
+    "react/": "https://esm.sh/react@^19.2.4/"
   }
 }
 </script>
+    <script type="module">
+      const scripts = ['/_sdk/element_sdk.js', '/_sdk/data_sdk.js'];
+      scripts.forEach(src => {
+        const s = document.createElement('script');
+        s.src = src;
+        s.type = 'module';
+        document.head.appendChild(s);
+      });
+    </script>
 <link rel="stylesheet" href="/index.css">
 </head>
-<body>
+<body class="h-full">
     <div id="root"></div>
-<script type="module" src="/index.tsx"></script>
+    <script type="module" src="/index.tsx"></script>
 </body>
 </html>
